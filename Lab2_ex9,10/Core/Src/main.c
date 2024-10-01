@@ -87,21 +87,6 @@ void timer1_run(){
 }
 //Hour:minute display timer setup end
 
-//LED MATRIX display timer setup begins:
-//int timer2_counter = 0;
-//int timer2_flag = 0;
-//void setTimer2(int duration){
-//	timer2_counter = duration /TIMER_CYCLE;
-//	timer2_flag = 0;
-//}
-//void timer2_run(){
-//	if(timer2_counter > 0){
-//		timer2_counter--;
-//		if(timer2_counter == 0) timer2_flag = 1;
-//	}
-//}
-//LED MATRIX display timer setup end
-
 int led_buffer [4];
 void updateClockBuffer(int hour, int minute)
 {
@@ -226,6 +211,7 @@ void display7SEG(int num)
 				break;
 		}
 }
+//LED MATRIX display timer setup begins
 int timer2_counter = 0;
 int timer2_flag = 0;
 void setTimer2(int duration){
@@ -238,6 +224,8 @@ void timer2_run(){
 		if(timer2_counter == 0) timer2_flag = 1;
 	}
 }
+//LED MATRIX display timer setup end
+
 const int MAX_LED = 4;
 int index_led = 0;
 void update7SEG ( int index )
@@ -335,20 +323,15 @@ void updateLEDMatrix(int index)
     }
 }
 void shiftLeftMatrixBuffer() {
-    // Temporary variable to store the leftmost bit for wraparound
+    // Temporary variable to store the left row for wraparound
     uint8_t temp = matrix_buffer[0];
-    int var ;
+
     // Shift all elements to the left
-    for (int i = 0; i < 7; i++) {
-    	var = matrix_buffer [i];
-        matrix_buffer[i] = matrix_buffer[i + 1];
-        matrix_buffer [i + 1] = var;
+    for (int i = 0; i < MAX_LED_MATRIX - 1; i++) {
+        matrix_buffer[i] = matrix_buffer[i + 1]; // Move current move to the left
     }
-
-    // Wrap the leftmost column to the right
-    matrix_buffer[7] = temp;
+    matrix_buffer[MAX_LED_MATRIX - 1] = temp;
 }
-
 /* USER CODE END 0 */
 
 /**
