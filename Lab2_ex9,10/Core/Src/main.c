@@ -373,6 +373,7 @@ int main(void)
   setTimer0(250);
   setTimer1(1000);
   setTimer2(10);
+  int index_led_matrix = 0;
   while (1)
   {
     /* USER CODE END WHILE */
@@ -415,12 +416,19 @@ int main(void)
 			  shiftLeftMatrixBuffer();  // Shift the character left on the LED matrix
 			  index_led_matrix=0;
 		  }
-		  setTimer2(10); //1/0.01= Hz
+		  setTimer2(10); //1/0.01s (Hz)
 	  }
   }
   /* USER CODE END 3 */
 }
-
+/* USER CODE BEGIN 4 */
+void HAL_TIM_PeriodElapsedCallback ( TIM_HandleTypeDef * htim )
+{
+	timer0_run ();
+	timer1_run ();
+	timer2_run ();
+}
+/* USER CODE END 4 */
 /**
   * @brief System Clock Configuration
   * @retval None
@@ -553,15 +561,6 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 }
-
-/* USER CODE BEGIN 4 */
-void HAL_TIM_PeriodElapsedCallback ( TIM_HandleTypeDef * htim )
-{
-	timer0_run ();
-	timer1_run ();
-	timer2_run ();
-}
-/* USER CODE END 4 */
 
 /**
   * @brief  This function is executed in case of error occurrence.
