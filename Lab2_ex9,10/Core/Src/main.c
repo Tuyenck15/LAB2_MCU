@@ -211,20 +211,6 @@ void display7SEG(int num)
 				break;
 		}
 }
-//LED MATRIX display timer setup begins
-int timer2_counter = 0;
-int timer2_flag = 0;
-void setTimer2(int duration){
-	timer2_counter = duration /TIMER_CYCLE;
-	timer2_flag = 0;
-}
-void timer2_run(){
-	if(timer2_counter > 0){
-		timer2_counter--;
-		if(timer2_counter == 0) timer2_flag = 1;
-	}
-}
-//LED MATRIX display timer setup end
 
 const int MAX_LED = 4;
 int index_led = 0;
@@ -262,7 +248,20 @@ void update7SEG ( int index )
 			break;
 	}
 }
-
+//LED MATRIX display timer setup begins
+int timer2_counter = 0;
+int timer2_flag = 0;
+void setTimer2(int duration){
+	timer2_counter = duration /TIMER_CYCLE;
+	timer2_flag = 0;
+}
+void timer2_run(){
+	if(timer2_counter > 0){
+		timer2_counter--;
+		if(timer2_counter == 0) timer2_flag = 1;
+	}
+}
+//LED MATRIX display timer setup end
 const int MAX_LED_MATRIX = 8;
 int index_led_matrix = 0;
 uint8_t matrix_buffer[8] = {
